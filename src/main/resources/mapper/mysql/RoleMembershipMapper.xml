@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.RoleMembership">
+    <resultMap id="roleMembershipResultMap" type="com.ly.entity.po.RoleMembershipPO">
+        <result property="id" column="id_"/>
+        <result property="type" column="type_"/>
+        <result property="roleId" column="role_id_"/>
+        <result property="membership" column="membership_id_"/>
+        <result property="operator" column="operator_"/>
+        <result property="operateTime" column="operate_time_"/>
+        <result property="operateIp" column="operate_ip_"/>
+    </resultMap>
+
+    <sql id="tbl_all_columns">
+        id_,type_,role_id_,membership_id_,operator_,operate_time_,operate_ip_
+    </sql>
+
+    <insert id="saveRoleMembership" parameterType="com.ly.entity.po.RoleMembershipPO">
+        INSERT INTO demo_role_membership
+        (<include refid="tbl_all_columns"/>)
+        VALUES
+        (#{id},#{type},#{roleId},#{membershipId},#{operator},#{operateTime},#{operateIp})
+    </insert>
+</mapper>

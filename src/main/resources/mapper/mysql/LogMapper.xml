@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.LogDao">
+    <resultMap id="logResultMap" type="com.ly.entity.po.LogPO">
+        <result property="id" column="id_"/>
+        <result property="targetId" column="target_id_"/>
+        <result property="oldValue" column="old_value_"/>
+        <result property="newValue" column="new_value_"/>
+        <result property="type" column="type_"/>
+        <result property="status" column="status_"/>
+        <result property="operator" column="operator_"/>
+        <result property="operateTime" column="operate_time_"/>
+        <result property="operateIp" column="operate_ip_"/>
+    </resultMap>
+
+    <sql id="tbl_all_columns">
+        id_,target_id_,old_value_,new_value_,type_,status_,operator_,operate_time_,operate_ip_
+    </sql>
+
+    <insert id="saveLog" parameterType="com.ly.entity.po.LogPO">
+        INSERT INTO demo_log
+        (<include refid="tbl_all_columns"/>)
+        VALUES
+        (#{id},#{targetId},#{oldValue},#{newValue},#{type},#{status},#{operator},#{operateTime},#{operateIp})
+    </insert>
+</mapper>

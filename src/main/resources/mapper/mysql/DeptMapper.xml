@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ly.dao.DeptDao">
+    <resultMap id="deptResultMap" type="com.ly.entity.po.DeptPO">
+        <result property="id" column="id_"/>
+        <result property="name" column="name_"/>
+        <result property="pId" column="parent_id_"/>
+        <result property="level" column="level_"/>
+        <result property="orderId" column="seq_"/>
+        <result property="remark" column="remark_"/>
+        <result property="operator" column="operator_"/>
+        <result property="operateTime" column="operate_time_"/>
+        <result property="operateIp" column="operate_ip_"/>
+        <result property="nameHeadChar" column="name_head_char_"/>
+    </resultMap>
+
+
+    <sql id="tbl_all_columns">
+        id_,name_,parent_id_,level_,seq_,remark_,operator_,operate_time_,operate_ip_,name_head_char_
+    </sql>
+
+
+    <insert id="saveDept" parameterType="com.ly.entity.po.DeptPO">
+        INSERT INTO demo_dept
+        (<include refid="tbl_all_columns"/>)
+        VALUES
+        (#{id},#{name},#{pId},#{level},#{orderId},#{remark},#{operator},#{operateTime},#{operateIp},#{nameHeadChar})
+    </insert>
+    <!--<insert id="saveDept" parameterType="com.ly.entity.po.DeptPO">
+        INSERT INTO demo_dept (id_,name_,parent_id_,level_,seq_,remark_,operator_,operate_time_,operate_ip_,name_head_char_) VALUES
+        (#{id},#{name},#{pId},#{level},#{orderId},#{remark},#{operator},#{operateTime},#{operateIp},#{nameHeadChar})
+    </insert>-->
+</mapper>

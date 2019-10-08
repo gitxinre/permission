@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <!-- web.xml中标签顺序 -->
+    <!--
+    (((description*, display-name*, icon*)) | 
+     distributable | context-param | filter | filter-mapping | listener 
+     | servlet | servlet-mapping | session-config | mime-mapping | 
+     welcome-file-list | error-page | jsp-config | security-
+     constraint | login-config | security-role | ((env-entry*, ejb-ref*, 
+     ejb-local-ref*, ((service-ref*)), resource-ref*, resource-env-
+     ref*, message-destination-ref*, persistence-context-ref*, 
+     persistence-unit-ref*, post-construct*, pre-destroy*)) | 
+     message-destination | locale-encoding-mapping-list)*
+    -->
+
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!-- 全局初始化配置文件 spring beans -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:application-context.xml</param-value>
+    </context-param>
+
+    <!-- filter start -->
+    <!-- encoding 适用post-->
+    <!-- get：通过uriEncoding设置，pom.xml中设置（开发时使用）；或者修改tomcat里边修改配置文件信息 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <!-- /* 只能匹配到所有的路径 -->
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.ly.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>druidWebFilter</filter-name>
+        <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+        <init-param>
+            <param-name>exclusions</param-name>
+            <param-value>*.js,*.css,*.jpg,*.png,*.ico,*.gif,/sys/druid/*</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>druidWebFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- filter end -->
+
+    <!-- listener start -->
+    <!-- listener下的ContextLoaderListener 是一种引入方式，默认读取/WEB-INF/applicationContext.xml -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- listener end -->
+
+
+    <!-- servlet start -->
+    <!-- DispatcherServlet 是一种引入方式，默认读取/WEB-INF/${servlet-name}-servlet.xml -->
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <!-- / 只能匹配到 例如：/hello  /login/user 这种形式的，匹配不到 /index.jsp这种的 -->
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- druid -->
+    <servlet>
+        <servlet-name>druidServlet</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>druid</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>druid</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>druidServlet</servlet-name>
+        <url-pattern>/sys/druid/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- servlet end -->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
