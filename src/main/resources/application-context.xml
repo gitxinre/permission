@@ -21,7 +21,8 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
         <!-- 全局异常等使用的注解 -->
-        <!--<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>-->
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestControllerAdvice"/>
     </context:component-scan>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -67,5 +68,5 @@
         <property name="dbType" value="mysql"/>
     </bean>
 
-    <bean class="com.ly.common.GlobalExceptionProcessor"/>
+    <!--<bean class="com.ly.common.GlobalExceptionProcessor"/>-->
 </beans>

@@ -1,12 +1,10 @@
 package com.ly.controller;
 
-import com.ly.common.ReturnResult;
-import com.ly.dao.DeptDao;
+import com.ly.common.Result;
 import com.ly.entity.dto.DeptDTO;
 import com.ly.entity.po.DeptPO;
 import com.ly.entity.pojo.TreeNode;
 import com.ly.service.DeptService;
-import com.ly.util.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,26 +24,26 @@ public class DeptController {
     private DeptService deptService;
 
     @RequestMapping("/saveDept.json")
-    public ReturnResult saveDept(DeptDTO deptDTO) {
+    public Result saveDept(DeptDTO deptDTO) {
         deptService.saveDept(deptDTO);
-        return ReturnResult.success();
+        return Result.success();
     }
 
     @RequestMapping("/listDeptTree.json")
-    public ReturnResult listDeptTree() {
+    public Result listDeptTree() {
         List<TreeNode> treeNodes = deptService.listDeptTree();
-        return ReturnResult.success(treeNodes);
+        return Result.success(treeNodes);
     }
 
     @RequestMapping("/listDept.json")
-    public ReturnResult listDept() {
+    public Result listDept() {
         List<DeptPO> treeNodes = deptService.listDept();
-        return ReturnResult.success(treeNodes);
+        return Result.success(treeNodes);
     }
 
     @RequestMapping("/updateDept.json")
-    public ReturnResult updateDept(DeptDTO deptDTO) {
+    public Result updateDept(DeptDTO deptDTO) {
         deptService.updatDeptById(deptDTO);
-        return ReturnResult.success();
+        return Result.success();
     }
 }

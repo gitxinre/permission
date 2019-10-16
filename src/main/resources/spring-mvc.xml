@@ -7,6 +7,7 @@
 
     <!-- 扫描controller -->
     <context:component-scan base-package="com.ly.controller"/>
+    <context:component-scan base-package="com.ly.exception"/>
 
     <!-- 注解驱动 -->
     <mvc:annotation-driven/>
@@ -16,9 +17,11 @@
     <!-- 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/views/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
     </bean>
-    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+        <property name="contentType" value="application/json;charset=UTF-8"/>
+    </bean>
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 

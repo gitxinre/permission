@@ -2,17 +2,17 @@ package com.ly.entity.po;
 
 import com.ly.entity.pojo.BaseEntity;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
 /**
  * @author xinre
  */
-@Builder
+//@Accessors(chain = true) // 使用这个注解时，在BeanUtils中复制的时候属性赋值不上
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class UserPO extends BaseEntity {
 
     private String code;

@@ -15,8 +15,8 @@
      persistence-unit-ref*, post-construct*, pre-destroy*)) | 
      message-destination | locale-encoding-mapping-list)*
     -->
-
-    <display-name>Archetype Created Web Application</display-name>
+    <display-name>New Tsing People</display-name>
+    <!--<display-name>Archetype Created Web Application</display-name>-->
 
     <!-- 全局初始化配置文件 spring beans -->
     <context-param>

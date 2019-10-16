@@ -155,6 +155,10 @@ public class DateUtils {
         System.out.println("timeIntervalFormat = " + timeIntervalFormat);
     }
 
+    public static Date currentTime() {
+        return new Date();
+    }
+
     /**
      * 获取当前时间（年-月-日 时:分:秒.毫秒）
      *

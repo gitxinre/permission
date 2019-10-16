@@ -1,6 +1,7 @@
 package com.ly.filter;
 
-import com.ly.common.RequestHolder;
+import com.ly.common.ThreadHolder;
+import com.ly.util.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -37,9 +38,13 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         StringBuffer requestURL = request.getRequestURL();
         String servletPath = request.getServletPath();
+
+        String ipAddress = IpUtils.getIpAddress(request);
+        System.out.println("ipAddress = " + ipAddress);
+
         System.out.println("URL = " + requestURL.toString() + servletPath);
         log.info("url is : [{}]", requestURL.toString() + servletPath);
-        RequestHolder.setRequest(request);
+        ThreadHolder.setRequest(request);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

@@ -1,6 +1,5 @@
 package com.ly.util;
 
-
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -171,6 +170,7 @@ public class IdGenerator {
         //return UUID.randomUUID().toString().replace("-", "");
         return String.valueOf(nextId());
     }
+
     public static String guid() {
         return instance.getNextId();
     }

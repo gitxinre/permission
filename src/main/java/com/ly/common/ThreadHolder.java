@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 请求作用域绑定类
+ * 线程绑定类（请求拦截器中在渲染视图之后调用remove()清空ThreadLocal）
  *
  * @author xinre
  */
-public class RequestHolder {
+public class ThreadHolder {
 
     private static final ThreadLocal<Map<String, Object>> LOCAL = new ThreadLocal<Map<String, Object>>();
 

@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 返回结果信息
+ * 响应结果信息
  *
  * @author xinre
  */
 @Getter
 @Setter
-public class ReturnResult implements Serializable {
+public class Result implements Serializable {
 
     /**
      * 处理成功的编码
@@ -44,7 +44,7 @@ public class ReturnResult implements Serializable {
     private Object resultData;
 
 
-    private ReturnResult(boolean success) {
+    private Result(boolean success) {
         this.success = success;
         if (success) {
             this.code = CODE_SUCCESS;
@@ -53,84 +53,84 @@ public class ReturnResult implements Serializable {
         }
     }
 
-    private ReturnResult(boolean success, String code) {
+    private Result(boolean success, String code) {
         this.success = success;
         this.code = code;
     }
 
-    public static ReturnResult success() {
-        return new ReturnResult(true);
+    public static Result success() {
+        return new Result(true);
     }
 
-    public static ReturnResult success(Object resultData) {
-        ReturnResult rr = new ReturnResult(true);
+    public static Result success(Object resultData) {
+        Result rr = new Result(true);
         rr.setResultData(resultData);
         return rr;
     }
 
-    public static ReturnResult success(String message) {
-        ReturnResult rr = new ReturnResult(true);
+    /*public static Result success(String message) {
+        Result rr = new Result(true);
         rr.setMessage(message);
         return rr;
-    }
+    }*/
 
-    public static ReturnResult success(String code, String message) {
-        ReturnResult rr = new ReturnResult(true, code);
+    /*public static Result success(String code, String message) {
+        Result rr = new Result(true, code);
         rr.setMessage(message);
         return rr;
-    }
+    }*/
 
-    public static ReturnResult success(Object resultData, String message) {
-        ReturnResult rr = new ReturnResult(true);
-        rr.setResultData(resultData);
-        rr.setMessage(message);
-        return rr;
-    }
-
-    public static ReturnResult success(Object resultData, String code, String message) {
-        ReturnResult rr = new ReturnResult(true, code);
+    public static Result success(Object resultData, String message) {
+        Result rr = new Result(true);
         rr.setResultData(resultData);
         rr.setMessage(message);
         return rr;
     }
 
-    public static ReturnResult fail() {
-        return new ReturnResult(false);
-    }
-
-    public static ReturnResult fail(String message) {
-        ReturnResult rr = new ReturnResult(false);
-        rr.setMessage(message);
-        return rr;
-    }
-
-    public static ReturnResult fail(Object resultData) {
-        ReturnResult rr = new ReturnResult(false);
-        rr.setResultData(resultData);
-        return rr;
-    }
-
-    public static ReturnResult fail(String code, String message) {
-        ReturnResult rr = new ReturnResult(false, code);
-        rr.setMessage(message);
-        return rr;
-    }
-
-    public static ReturnResult fail(Object resultData, String message) {
-        ReturnResult rr = new ReturnResult(false);
+    public static Result success(Object resultData, String code, String message) {
+        Result rr = new Result(true, code);
         rr.setResultData(resultData);
         rr.setMessage(message);
         return rr;
     }
 
-    public static ReturnResult fail(Object resultData, String code, String message) {
-        ReturnResult rr = new ReturnResult(false, code);
+    public static Result fail() {
+        return new Result(false);
+    }
+
+    public static Result fail(String message) {
+        Result rr = new Result(false);
+        rr.setMessage(message);
+        return rr;
+    }
+
+    /*public static Result fail(Object resultData) {
+        Result rr = new Result(false);
+        rr.setResultData(resultData);
+        return rr;
+    }*/
+
+    public static Result fail(String code, String message) {
+        Result rr = new Result(false, code);
+        rr.setMessage(message);
+        return rr;
+    }
+
+    /*public static Result fail(Object resultData, String message) {
+        Result rr = new Result(false);
+        rr.setResultData(resultData);
+        rr.setMessage(message);
+        return rr;
+    }*/
+
+    public static Result fail(String code, String message, Object resultData) {
+        Result rr = new Result(false, code);
         rr.setResultData(resultData);
         rr.setMessage(message);
         return rr;
     }
 
-    Map<String,Object> toMap() {
+    public Map<String, Object> toMap() {
         Map<String, Object> r = new HashMap<String, Object>();
         r.put("code", this.getCode());
         r.put("message", this.getMessage());

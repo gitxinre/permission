@@ -1,13 +1,14 @@
 package com.ly.util;
 
+import com.google.common.collect.Lists;
 import com.ly.entity.dto.UserDTO;
 import com.ly.entity.po.UserPO;
 import com.ly.exception.PermissionException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.cglib.beans.BeanCopier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,51 @@ import java.util.List;
 public class BeanUtil {
 
 
-    public static <S, T> T copyEntity2AnotherEntity(S sourceEntity, Class<T> targetEntityClass) {
+    /**
+     * 采用cglib BeanCopier 进行对象的复制（速度较快）
+     *
+     * @param sourceEntity      被复制的对象
+     * @param targetEntityClass 新对象Class
+     * @param <S>               源
+     * @param <T>               目标
+     * @return 目标
+     */
+    public static <S, T> T copier(S sourceEntity, Class<T> targetEntityClass) {
+        T t;
+        final BeanCopier beanCopier = BeanCopier.create(sourceEntity.getClass(), targetEntityClass, false);
+        try {
+            t = targetEntityClass.newInstance(); // javabean含有@builder注解这里会报错
+            beanCopier.copy(sourceEntity, t, null);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new PermissionException(e.getMessage());
+        }
+        return t;
+    }
+
+    public static <S, T> List<T> copier(List<S> sourceEntityList, Class<T> targetEntityClass) {
+
+        if (CollectionUtils.isEmpty(sourceEntityList)) {
+            return null;
+        } else {
+            List<T> r = Lists.newArrayListWithCapacity(sourceEntityList.size());
+            final BeanCopier beanCopier = BeanCopier.create(sourceEntityList.get(0).getClass(), targetEntityClass, false);
+            for (int i = 0; i < sourceEntityList.size(); i++) {
+                try {
+                    T t = targetEntityClass.newInstance();
+                    beanCopier.copy(sourceEntityList.get(i), t, null);
+                    r.add(t);
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    throw new PermissionException(e.getMessage());
+                }
+            }
+            return r;
+        }
+    }
+
+
+    public static <S, T> T convert(S sourceEntity, Class<T> targetEntityClass) {
         T t;
         try {
             t = targetEntityClass.newInstance();
@@ -29,11 +74,11 @@ public class BeanUtil {
         return t;
     }
 
-    public static <S, T> List<T> copyEntityList2AnotherEntityList(List<S> sourceEntityList, Class<T> targetEntityClass) {
+    public static <S, T> List<T> convert(List<S> sourceEntityList, Class<T> targetEntityClass) {
         if (CollectionUtils.isEmpty(sourceEntityList)) {
             return null;
         } else {
-            List<T> targetEntityList = new ArrayList<T>();
+            List<T> targetEntityList = Lists.newArrayListWithCapacity(sourceEntityList.size());
             for (int i = 0, size = sourceEntityList.size(); i < size; i++) {
                 try {
                     T t = targetEntityClass.newInstance();
@@ -60,7 +105,7 @@ public class BeanUtil {
         build.setId(IdGenerator.guid());
         build.setName("中国我爱你");
         build.setNameHeadChar(PinYinUtils.headChar(build.getName()));
-        UserPO userPO = copyEntity2AnotherEntity(build, UserPO.class);
+        UserPO userPO = convert(build, UserPO.class);
         System.out.println("userPO = " + userPO);
     }
 }
